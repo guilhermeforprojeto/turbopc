@@ -5,6 +5,24 @@ color a
 color b
 
 
+@echo off
+echo Desativando sombreamento das janelas no Windows 10...
+
+rem Caminho no registro que armazena a configuração visual das janelas
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects" /v VisualFXSetting /t REG_DWORD /d 3 /f
+
+rem Atualizando as configurações de desempenho no painel de controle
+reg add "HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM" /v EnableAeroPeek /t REG_DWORD /d 0 /f
+reg add "HKEY_CURRENT_USER\Control Panel\Desktop" /v UserPreferencesMask /t REG_BINARY /d 9012038010000000 /f
+
+rem Reiniciando o processo explorer para aplicar as mudanças
+taskkill /f /im explorer.exe
+start explorer.exe
+
+echo Sombreamento desativado com sucesso!
+pause
+
+
 echo ==============================
 echo  ............................ 
 echo  ... System Bee Solutions ... 
